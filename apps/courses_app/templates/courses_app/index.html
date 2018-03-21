@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    {% load static %}
+    <!-- The line above tells Django to be ready to listen for static files -->
+    <link rel="stylesheet" href="{% static 'blogs/css/main.css' %}" media="screen" title="no title" charset="utf-8">
+    <!-- Put the static files in the static folder inside your app.  Django collects files within all static folders and puts them within a single folder -->
+</head>
+
+<body>
+    <h1>Add A New Course</h1>
+    <form action="/create" method="post">
+        {% csrf_token %}
+        <label for="name">Name:</label>
+        <input type="text" name="name">
+        <label for="desc">Description:</label>
+        <textarea type="text" name="desc"></textarea>
+        <input type="submit" value="Create!">
+    </form>
+
+    <h1>Courses</h1>
+    {%for error in messages%}
+        {{error}}
+    {%endfor%}
+
+
+    {%for course in all_courses%}
+        <p>id: {{course.id}}
+        first: {{course.name}}
+        last: {{course.desc}}
+        Date Added: {{course.created_at}}
+        actions: <a href="/courses/destroy/{{course.id}}">Delete</a>
+    </p>
+    {%endfor%}
+
+
+</body>
+
+</html>
